@@ -1,5 +1,5 @@
 /* 
-Colour pallet
+Colour pallet - Selected from https://coolors.co/ 
 
 Neutrals
 #000
@@ -16,6 +16,50 @@ Accents-Cool
 
 */
 
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
 body {
-  background-color: rebeccapurple;
+  background: linear-gradient(90deg,rgba(46, 196, 182, 1) 0%, rgba(203, 243, 240, 1) 100%);
+  display: flex;
+  height: 100vh;
+  padding: 16px;
+}
+
+#card {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex: 1;  
+  box-shadow: /* AI - Box shadow values */
+  0 2px 4px rgba(0, 0, 0, 0.1),    
+  0 8px 24px rgba(0, 0, 0, 0.2);   
+  border-radius: 8px;
+}
+
+#card > * {
+  padding: 20px 8px;
+}
+
+#sidebar {
+  flex: 20%;
+  background-color:#CBF3F0;
+  border-radius: 8px 0px 0px 8px;
+}
+
+#centre-window {
+  flex: 40%;
+}
+
+#task-preview {
+  flex: 40%;
+  border-radius: 0px 8px 8px 0px;
+}
+
+#centre-window, 
+#task-preview {
+  border-left: 1px #dfdfdf solid;
+  background-color: #fff;
 }
