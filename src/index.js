@@ -3,7 +3,19 @@ import listController from "./listController.js"
 import uiController from "./uiController.js"
 
 console.log("Working! Yipeeee!")
-listController.createList("First List")
-listController.createList("Another List")
-listController.createList("List poopy")
-uiController.updateLists()
+
+const createListBtn = document.querySelector("#sidebar-header");
+const sidebarContent = document.querySelector("#sidebar-content");
+createListBtn.addEventListener("click", () => {
+    uiController.showAddListModal()
+    
+})
+
+const listForm = document.querySelector("#list-form")
+const submitButton = document.querySelector("#submit-list")
+listForm.addEventListener("submit", () => {
+    const listNameField = document.querySelector("#list-name")
+    listController.createList(listNameField.value)    
+    uiController.updateLists()
+    listForm.reset()
+})

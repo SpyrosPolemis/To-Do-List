@@ -17,6 +17,10 @@ const uiController = {
             listDiv.classList.add("list-entry", "no-select");
             sidebarContent.append(listDiv);
         }
+    },
+    showAddListModal() {
+        const AddListModal = document.querySelector("#newListDialog")        
+        AddListModal.show()
     }
 }
 
