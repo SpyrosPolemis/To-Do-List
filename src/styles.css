@@ -3,22 +3,22 @@ Colour pallet - Selected from https://coolors.co/
 
 Neutrals
 #000
-#EFEFEF
-#FFF
+#DFDFDF - Vertical Dividers 
 
-Accents-Warm
-#FFBF69
-#FF9F1C
-
-Accents-Cool
+Accents
 #CBF3F0
 #2EC4B6
+#0F413C - Text
 
+Accents-Warm - Might not use
+#FFBF69
+#FF9F1C
 */
 
 * {
   margin: 0;
   box-sizing: border-box;
+  font-family: "Inter", sans-serif;
 }
 
 body {
@@ -40,14 +40,10 @@ body {
 }
 
 #card > * {
-  padding: 20px 8px;
+  padding: 12px 20px;
 }
 
-#sidebar {
-  flex: 20%;
-  background-color:#CBF3F0;
-  border-radius: 8px 0px 0px 8px;
-}
+
 
 #centre-window {
   flex: 40%;
@@ -62,4 +58,50 @@ body {
 #task-preview {
   border-left: 1px #dfdfdf solid;
   background-color: #fff;
+}
+
+.no-select {
+  user-select: none;
+}
+
+/* Sidebar */
+#sidebar {
+  flex: 20%;
+  background-color:#CBF3F0;
+  border-radius: 8px 0px 0px 8px;
+}
+
+#sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #0f413c;
+  padding: 4px;
+  margin: 8px 0px;
+  font-size: 1.2rem;
+}
+
+#sidebar-header:hover,
+.list-entry:hover {
+  background-color: #a1cec9;
+  border-radius: 4px;
+}
+
+.sidebar-divider {
+  border: 1px solid #0f413c;
+}
+
+#sidebar-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.list-entry {
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 4px;
 }
