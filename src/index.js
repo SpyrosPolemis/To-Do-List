@@ -12,7 +12,6 @@ createListBtn.addEventListener("click", () => {
 })
 
 const listForm = document.querySelector("#list-form")
-const submitButton = document.querySelector("#submit-list")
 listForm.addEventListener("submit", () => {
     const listNameField = document.querySelector("#list-name")
     listController.createList(listNameField.value)    
