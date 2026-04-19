@@ -3,13 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Spyros Todo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">      
 </head>
 <body>
     <div id="card">
-        <div id="sidebar">Test content</div>
-        <div id="centre-window">Chores</div>
+        <div id="sidebar">
+            <div id="sidebar-header" class="no-select">
+                <h1>Lists</h1>
+                <div><img src="assets/add_circle_big.svg" alt="Add-list" draggable="false"></div>
+            </div>
+            <div class="sidebar-divider"></div>
+            <div id="sidebar-content"></div>
+        </div>
+        <div id="centre-window">
+            <div id="centre-header"></div>
+            <div id="tasks"></div>
+        </div>
         <div id="task-preview">Clean Room</div>
     </div>
+    <dialog id="newListDialog">
+        <form method="dialog" id="list-form">
+            <label for="listName"></label>
+            <input type="text" id="list-name" name="list-name" required>
+            <button type="submit" id="submit-list">Add</button>
+        </form>
+    </dialog>
 </body>
 </html>
