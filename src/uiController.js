@@ -2,7 +2,9 @@ import listController from "./listController.js";
 import listIcon from "./assets/menu.svg"
 
 const sidebarContent = document.querySelector("#sidebar-content");
-const centreWindow = document.querySelector("#centre-window")
+// const centreWindow = document.querySelector("#centre-window")
+const taskInputSection = document.querySelector("#task-input")
+const centreContent = document.querySelector("#tasks") 
 const centreHeading = document.querySelector("#centre-header")
 
 const uiController = {
@@ -29,14 +31,34 @@ const uiController = {
     focusList(listToFocus) {
         const lists = listController.getLists()
         const list = lists.find(list => list.ID === listToFocus)
-        const centreContent = document.querySelector("#tasks") 
+        centreContent.innerHTML = ""
         centreHeading.textContent = list.name
+        taskInputSection.innerHTML = ""
+        createTaskInput(list)
         list.tasks.forEach(task => {
             const taskDiv = document.createElement("div")
-            taskDiv.textContent = "Task 1" // TODO: Implement Tasks
+            taskDiv.textContent = task.name
             centreContent.append(taskDiv)
         });
     }
+}
+
+function createTaskInput(list) {
+    const taskInputField = document.createElement("input")
+    const taskInputSubmit = document.createElement("button")
+    taskInputSubmit.textContent = "Add task"
+    taskInputSubmit.onclick = () => {
+        list.addTask(taskInputField.value)
+        centreContent.innerHTML = ""
+        list.tasks.forEach(task => {
+            const taskDiv = document.createElement("div")
+            taskDiv.textContent = task.name
+            centreContent.append(taskDiv)
+            console.log(task)
+        });
+        taskInputField.value = ""
+    }
+    taskInputSection.append(taskInputField, taskInputSubmit)
 }
 
 export default uiController
