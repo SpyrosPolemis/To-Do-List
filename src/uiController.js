@@ -6,6 +6,9 @@ const sidebarContent = document.querySelector("#sidebar-content");
 const taskInputSection = document.querySelector("#task-input")
 const centreContent = document.querySelector("#tasks") 
 const centreHeading = document.querySelector("#centre-header")
+const taskHeader = document.querySelector("#task-header")
+const taskContent = document.querySelector("#task-content")
+
 
 const uiController = {
     updateLists() {
@@ -19,7 +22,7 @@ const uiController = {
             listDiv.append(icon, lists[i].name);
             listDiv.classList.add("list-entry", "no-select");
             listDiv.onclick = () => {
-                this.focusList(lists[i].ID)
+                focusList(lists[i].ID)
             } ;
             sidebarContent.append(listDiv);
         }
@@ -28,15 +31,16 @@ const uiController = {
         const AddListModal = document.querySelector("#newListDialog")        
         AddListModal.show()
     },
-    focusList(listToFocus) {
-        const lists = listController.getLists()
-        const list = lists.find(list => list.ID === listToFocus)
-        centreContent.innerHTML = ""
-        centreHeading.textContent = list.name
-        taskInputSection.innerHTML = ""
-        createTaskInput(list)
-        updateTasks(list)
-    }
+}
+
+function focusList(listToFocus) {
+    const lists = listController.getLists()
+    const list = lists.find(list => list.ID === listToFocus)
+    centreContent.innerHTML = ""
+    centreHeading.textContent = list.name
+    taskInputSection.innerHTML = ""
+    createTaskInput(list)
+    updateTasks(list)
 }
 
 function createTaskInput(list) {
@@ -58,8 +62,16 @@ function updateTasks(list) {
         const taskDiv = document.createElement("div")
         taskDiv.textContent = task.name
         taskDiv.classList.add("task")
+        taskDiv.onclick = () => {
+            focusTask(task)
+        }
         centreContent.append(taskDiv)
     });
 }
+
+function focusTask(taskToFocus) {
+    taskHeader.textContent = taskToFocus.name
+}
+
 
 export default uiController

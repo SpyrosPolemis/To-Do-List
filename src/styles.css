@@ -154,5 +154,10 @@ body {
   background-color: #FFBF69 ;
 }
 
+/* Task focus window */
+
+#task-header {
+ color: #FFBF69;
+}
 /* #FFBF69
 #FF9F1C */
