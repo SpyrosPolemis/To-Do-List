@@ -71,6 +71,7 @@ function updateTasks(list) {
 
 function focusTask(taskToFocus) {
     taskHeader.textContent = taskToFocus.name
+    taskContent.textContent = taskToFocus.description
 }
 
 
