@@ -1,4 +1,4 @@
-import List from "./list.js"
+import List from "./List.js"
 
 let lists = []
 
