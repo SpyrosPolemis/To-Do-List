@@ -84,7 +84,6 @@ body {
 #sidebar-header:hover,
 .list-entry:hover {
   background-color: #a1cec9;
-  border-radius: 4px;
 }
 
 .sidebar-divider {
@@ -130,6 +129,29 @@ body {
 #task-input {
   display: flex;
   gap: 12px;
+  margin: 12px 0;
+}
+
+.task-input-field {
+  flex-grow: 1;
+  padding: 8px 4px;
+  border-radius: 4px;
+  border: solid 1px #FFBF69;
+}
+
+.task-input-field:focus {
+  outline: solid 2px #FF9F1C;
+}
+
+.task {
+  padding: 8px 4px;
+  margin: 4px 0px;
+  border: solid 1px #FF9F1C;
+  border-radius: 8px;
+}
+
+.task:hover {
+  background-color: #FFBF69 ;
 }
 
 /* #FFBF69

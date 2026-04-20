@@ -37,6 +37,7 @@ const uiController = {
         createTaskInput(list)
         list.tasks.forEach(task => {
             const taskDiv = document.createElement("div")
+            taskDiv.classList.add("task")
             taskDiv.textContent = task.name
             centreContent.append(taskDiv)
         });
@@ -46,6 +47,7 @@ const uiController = {
 function createTaskInput(list) {
     const taskInputField = document.createElement("input")
     const taskInputSubmit = document.createElement("button")
+    taskInputField.classList.add("task-input-field")
     taskInputSubmit.textContent = "Add task"
     taskInputSubmit.onclick = () => {
         list.addTask(taskInputField.value)
@@ -53,6 +55,7 @@ function createTaskInput(list) {
         list.tasks.forEach(task => {
             const taskDiv = document.createElement("div")
             taskDiv.textContent = task.name
+            taskDiv.classList.add("task")
             centreContent.append(taskDiv)
             console.log(task)
         });
@@ -62,5 +65,3 @@ function createTaskInput(list) {
 }
 
 export default uiController
-
-
