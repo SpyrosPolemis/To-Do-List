@@ -119,3 +119,14 @@ body {
   0 2px 4px rgba(0, 0, 0, 0.1),    
   0 8px 24px rgba(0, 0, 0, 0.2);  
 }
+
+/* Centre */
+
+#centre-header {
+  color: #FF9F1C;
+  padding: 4px;
+  border-bottom: #FFBF69 solid 1px;
+}
+
+/* #FFBF69
+#FF9F1C */
