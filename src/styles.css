@@ -105,6 +105,10 @@ body {
   border-radius: 4px;
 }
 
+.active-list {
+  background-color:#a1cec9 ;
+}
+
 /* List Dialog */
 
 #newListDialog {

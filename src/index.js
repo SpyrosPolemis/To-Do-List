@@ -8,7 +8,6 @@ const createListBtn = document.querySelector("#sidebar-header");
 const sidebarContent = document.querySelector("#sidebar-content");
 createListBtn.addEventListener("click", () => {
     uiController.showAddListModal()
-    
 })
 
 const listForm = document.querySelector("#list-form")
