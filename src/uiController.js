@@ -35,12 +35,7 @@ const uiController = {
         centreHeading.textContent = list.name
         taskInputSection.innerHTML = ""
         createTaskInput(list)
-        list.tasks.forEach(task => {
-            const taskDiv = document.createElement("div")
-            taskDiv.classList.add("task")
-            taskDiv.textContent = task.name
-            centreContent.append(taskDiv)
-        });
+        updateTasks(list)
     }
 }
 
@@ -52,16 +47,19 @@ function createTaskInput(list) {
     taskInputSubmit.onclick = () => {
         list.addTask(taskInputField.value)
         centreContent.innerHTML = ""
-        list.tasks.forEach(task => {
-            const taskDiv = document.createElement("div")
-            taskDiv.textContent = task.name
-            taskDiv.classList.add("task")
-            centreContent.append(taskDiv)
-            console.log(task)
-        });
+        updateTasks(list)
         taskInputField.value = ""
     }
     taskInputSection.append(taskInputField, taskInputSubmit)
+}
+
+function updateTasks(list) {
+    list.tasks.forEach(task => {
+        const taskDiv = document.createElement("div")
+        taskDiv.textContent = task.name
+        taskDiv.classList.add("task")
+        centreContent.append(taskDiv)
+    });
 }
 
 export default uiController
