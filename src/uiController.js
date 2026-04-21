@@ -75,7 +75,15 @@ function updateTasks(list) {
 
 function focusTask(taskToFocus) {
     taskHeader.textContent = taskToFocus.name
-    taskContent.textContent = taskToFocus.description
+    taskContent.innerHTML = ""
+    const taskText = document.createElement("textarea")
+    taskText.addEventListener("input", () => {
+        console.log("Saving?")
+        taskToFocus.description = taskText.value
+    })
+    taskContent.append(taskText)
+    taskText.focus()
+    taskText.textContent = taskToFocus.description
 }
 
 

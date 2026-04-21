@@ -168,5 +168,10 @@ body {
 #task-header {
  color: #FFBF69;
 }
+
+textarea {
+  resize: none;
+  width: 100%;
+}
 /* #FFBF69
 #FF9F1C */
