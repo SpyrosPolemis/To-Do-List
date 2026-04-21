@@ -87,5 +87,19 @@ function focusTask(taskToFocus) {
     taskText.textContent = taskToFocus.description
 }
 
+const listConfigSect = document.querySelector("#list-config")
+const listConfigBtn = document.querySelector("#list-config-btn")
+const listConfigMenu = document.querySelector("#list-config-menu")
+
+listConfigBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    listConfigMenu.classList.toggle('open');
+})
+
+document.addEventListener("click", () => {
+    listConfigMenu.classList.remove("open")
+})
+
+
 
 export default uiController

@@ -11,15 +11,24 @@
 <body>
     <div id="card">
         <div id="sidebar">
-            <div id="sidebar-header" class="no-select">
+            <div id="sidebar-header" class="no-select clickable">
                 <h1>Lists</h1>
-                <div><img src="assets/add_circle_big.svg" alt="Add-list" draggable="false"></div>
+                <img src="assets/add_circle_big.svg" alt="Add-list" draggable="false">
             </div>
             <div class="sidebar-divider"></div>
             <div id="sidebar-content"></div>
         </div>
         <div id="centre-window">
-            <h1 id="centre-header">Tasks</h1>
+            <h1 id="centre-header">
+                <div id="list-header">Tasks</div>
+                <div id="list-config" class="no-select">
+                    <button id="list-config-btn" class="clickable"><img src="./assets/config.svg" alt="" draggable="false"></button>
+                    <div id="list-config-menu">
+                        <div><button class="list-config-option clickable">Show Completed</button></div>
+                        <div><button class="list-config-option clickable">Delete List</button></div>
+                    </div>
+                </div>
+            </h1>
             <div id="task-input"></div>
             <div id="tasks"></div>
         </div>
