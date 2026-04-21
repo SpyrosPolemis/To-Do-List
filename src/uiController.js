@@ -81,6 +81,7 @@ function focusTask(taskToFocus) {
         console.log("Saving?")
         taskToFocus.description = taskText.value
     })
+    taskText.placeholder = "Edit task description"
     taskContent.append(taskText)
     taskText.focus()
     taskText.textContent = taskToFocus.description
