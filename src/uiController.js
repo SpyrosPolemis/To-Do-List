@@ -6,9 +6,11 @@ const sidebarContent = document.querySelector("#sidebar-content");
 const taskInputSection = document.querySelector("#task-input")
 const centreContent = document.querySelector("#tasks") 
 const centreHeading = document.querySelector("#centre-header")
+const listHeader = document.querySelector("#list-header")
 const taskHeader = document.querySelector("#task-header")
 const taskContent = document.querySelector("#task-content")
 
+let activeList = ""
 
 const uiController = {
     updateLists() {
@@ -35,12 +37,13 @@ const uiController = {
     },
 }
 
-function focusList(listToFocus) {
+function focusList(listToFocusID) {
     const lists = listController.getLists()
-    const list = lists.find(list => list.ID === listToFocus)
+    const list = lists.find(list => list.ID === listToFocusID)
     centreContent.innerHTML = ""
-    centreHeading.textContent = list.name
+    listHeader.textContent = list.name
     taskInputSection.innerHTML = ""
+    activeList = list
     createTaskInput(list)
     updateTasks(list)
 }
@@ -78,7 +81,6 @@ function focusTask(taskToFocus) {
     taskContent.innerHTML = ""
     const taskText = document.createElement("textarea")
     taskText.addEventListener("input", () => {
-        console.log("Saving?")
         taskToFocus.description = taskText.value
     })
     taskText.placeholder = "Edit task description"
@@ -90,6 +92,18 @@ function focusTask(taskToFocus) {
 const listConfigSect = document.querySelector("#list-config")
 const listConfigBtn = document.querySelector("#list-config-btn")
 const listConfigMenu = document.querySelector("#list-config-menu")
+
+const showCompleteBtn = document.querySelector("#show-completed-btn")
+const deleteListBtn = document.querySelector("#delete-list-btn")
+
+deleteListBtn.addEventListener("click", () => {
+    console.log(activeList)
+    if (activeList != "") {
+        console.log("Call to delete list firing")
+        listController.deleteList(activeList.ID)
+        uiController.updateLists()
+    }
+})
 
 listConfigBtn.addEventListener("click", (e) => {
     e.stopPropagation();
