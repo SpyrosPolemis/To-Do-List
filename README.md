@@ -1,6 +1,14 @@
 To-Do App
 
-TODO: deleting tasks and lists, making focused tasks highlighted, able to check off tasks, editing task descriptions, adding due dates, local storage, 
+TODO: 
+- Check off/on tasks
+- Delete Tasks
+- Focused tasks highlighted
+- Deleting tasks/list behaviour
+- Initial page load
+- Task due dates
+- Task sorting, priority?
+- Local storage
 
 All AI usage is declared in the code through comments.
 

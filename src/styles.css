@@ -211,10 +211,28 @@ background: radial-gradient(circle at bottom right,rgba(46, 196, 182, 1) 0%, rgb
   margin: 8px 0px;
   border: solid 1px #FF9F1C;
   border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .task:hover {
   background-color: #FFBF69 ;
+}
+
+#tasks {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#tasks > * {
+  flex: 1;
+}
+
+.completed {
+  opacity: 50%;
+  text-decoration: line-through;
 }
 
 /* Task focus window */
@@ -245,5 +263,3 @@ textarea {
 textarea:focus {
   outline: none;
 }
-/* #FFBF69
-#FF9F1C */

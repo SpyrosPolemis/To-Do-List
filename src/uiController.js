@@ -1,10 +1,15 @@
 import listController from "./listController.js";
 import listIcon from "./assets/menu.svg"
+import checkedIcon from "./assets/blackChecked.svg"
+import uncheckedIcon from "./assets/blackUnchecked.svg"
+
 
 const sidebarContent = document.querySelector("#sidebar-content");
 // const centreWindow = document.querySelector("#centre-window")
 const taskInputSection = document.querySelector("#task-input")
 const centreContent = document.querySelector("#tasks") 
+const completedTasks = document.querySelector("#completed-tasks-content")
+const incompleteTasks = document.querySelector("#incomplete-tasks-content")
 const centreHeading = document.querySelector("#centre-header")
 const listHeader = document.querySelector("#list-header")
 const taskHeader = document.querySelector("#task-header")
@@ -40,7 +45,8 @@ const uiController = {
 function focusList(listToFocusID) {
     const lists = listController.getLists()
     const list = lists.find(list => list.ID === listToFocusID)
-    centreContent.innerHTML = ""
+    taskInputSection.innerHTML = ""
+
     listHeader.textContent = list.name
     taskInputSection.innerHTML = ""
     activeList = list
@@ -56,7 +62,7 @@ function createTaskInput(list) {
     taskInputSubmit.onclick = () => {
         if (taskInputField.value.length > 0) {
             list.addTask(taskInputField.value)
-            centreContent.innerHTML = ""
+            taskInputField.innerHTML = ""
             updateTasks(list)
             taskInputField.value = ""
         }
@@ -65,15 +71,51 @@ function createTaskInput(list) {
 }
 
 function updateTasks(list) {
+    completedTasks.innerHTML = ""
+    incompleteTasks.innerHTML = ""
     list.tasks.forEach(task => {
         const taskDiv = document.createElement("div")
-        taskDiv.textContent = task.name
+        const checkTask = document.createElement("img")
+        checkTask.classList.add("no-select")
+        const taskName = document.createElement("div")
+        if (!task.completed) {
+            checkTask.src = uncheckedIcon
+        } else {
+            checkTask.src = checkedIcon
+        }
+        checkTask.addEventListener("click", (e) => {
+            e.stopPropagation()
+            if(task.completed) {
+                task.markIncomplete()
+                checkTask.src = uncheckedIcon
+                
+            } else {
+                task.markComplete()
+                checkTask.src = checkedIcon
+                
+            }
+            updateTasks(list)
+        })
+        taskName.textContent = task.name
+        taskDiv.append(checkTask, taskName)
         taskDiv.classList.add("task")
         taskDiv.onclick = () => {
             focusTask(task)
         }
-        centreContent.append(taskDiv)
+        if (task.completed) {
+            taskDiv.classList.add("completed")
+            taskName.classList.add("completed")
+            completedTasks.append(taskDiv)
+        } else {
+            incompleteTasks.append(taskDiv)
+            taskDiv.classList.remove("completed")
+            taskName.classList.remove("completed")
+        }
     });
+}
+
+function handleChecked(taskCompleted) {
+    
 }
 
 function focusTask(taskToFocus) {
