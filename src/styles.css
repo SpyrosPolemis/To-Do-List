@@ -224,6 +224,7 @@ background: radial-gradient(circle at bottom right,rgba(46, 196, 182, 1) 0%, rgb
   display: flex;
   flex-direction: column;
   height: 100%;
+  overflow: auto;
 }
 
 #tasks > * {
