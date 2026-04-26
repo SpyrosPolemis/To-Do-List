@@ -158,6 +158,7 @@ deleteListBtn.addEventListener("click", () => {
         console.log("Call to delete list firing")
         listController.deleteList(activeList.ID)
         uiController.updateLists()
+        uiController.focusList(listController.getMasterList())
     }
 })
 

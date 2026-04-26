@@ -1,9 +1,10 @@
 export default class {
-    constructor(name) {
+    constructor(name, listID) {
         this.name = name
         this.ID = crypto.randomUUID()
         this.description = ""
         this.completed = false
+        this.listID = listID
     }
     
     markComplete() {

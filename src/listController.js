@@ -7,6 +7,7 @@ const listController = {
     deleteList(listID) {
         const listToDelete = lists.findIndex(list => list.ID === listID)
         if (listToDelete !== -1) {
+            masterlist.tasks = masterlist.tasks.filter(task => task.listID !== listID)
             lists.splice(listToDelete, 1)
         } 
     },
@@ -20,7 +21,7 @@ const listController = {
         return lists.map((list) => list.name)
     },
     getMasterList() {
-        console.log(masterlist.tasks)
+        console.log("masterlist tasks " + masterlist.tasks)
         let allTasks = new Set([...masterlist.tasks])
         lists.forEach((list) => {
             list.tasks.forEach((task) => {

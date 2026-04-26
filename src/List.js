@@ -8,6 +8,6 @@ export default class List {
     }
 
     addTask(taskName) { 
-        this.tasks.push(new Task(taskName))
+        this.tasks.push(new Task(taskName, this.ID))
     }
 }
