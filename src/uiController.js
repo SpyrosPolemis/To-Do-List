@@ -70,6 +70,8 @@ function createTaskInput(list) {
     taskInputSection.append(taskInputField, taskInputSubmit)
 }
 
+
+let focusedTaskID;
 function updateTasks(list) {
     completedTasks.innerHTML = ""
     incompleteTasks.innerHTML = ""
@@ -99,8 +101,20 @@ function updateTasks(list) {
         taskName.textContent = task.name
         taskDiv.append(checkTask, taskName)
         taskDiv.classList.add("task")
+        if (task.ID === focusedTaskID) {
+            taskDiv.classList.add("focused-task")
+        }
         taskDiv.onclick = () => {
             focusTask(task)
+            completedTasks.querySelectorAll(".task").forEach((t) => {
+                t.classList.remove("focused-task")
+                console.log("hm")
+            })
+            incompleteTasks.querySelectorAll(".task").forEach((t) => {
+                t.classList.remove("focused-task")
+            })
+            taskDiv.classList.add("focused-task")
+            focusedTaskID = task.ID
         }
         if (task.completed) {
             taskDiv.classList.add("completed")
@@ -112,10 +126,6 @@ function updateTasks(list) {
             taskName.classList.remove("completed")
         }
     });
-}
-
-function handleChecked(taskCompleted) {
-    
 }
 
 function focusTask(taskToFocus) {

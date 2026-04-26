@@ -1,7 +1,6 @@
 To-Do App
 
 TODO: 
-- Check off/on tasks
 - Delete Tasks
 - Focused tasks highlighted
 - Deleting tasks/list behaviour
@@ -9,6 +8,7 @@ TODO:
 - Task due dates
 - Task sorting, priority?
 - Local storage
+- Fix code structure, too much in uiController
 
 All AI usage is declared in the code through comments.
 
