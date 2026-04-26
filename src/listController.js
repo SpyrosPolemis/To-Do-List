@@ -20,12 +20,14 @@ const listController = {
         return lists.map((list) => list.name)
     },
     getMasterList() {
-        masterlist.tasks = []
+        console.log(masterlist.tasks)
+        let allTasks = new Set([...masterlist.tasks])
         lists.forEach((list) => {
             list.tasks.forEach((task) => {
-                masterlist.tasks.push(task)
+                allTasks.add(task)
             })
         })
+        masterlist.tasks = [...allTasks]
         return masterlist
     }
 }
