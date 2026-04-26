@@ -237,8 +237,13 @@ background: radial-gradient(circle at bottom right,rgba(46, 196, 182, 1) 0%, rgb
 }
 
 .focused-task {
-  background-color: #FFBF69;
+  background-color: #FF9F1C;
 }
+
+.focused-task:hover {
+  background-color: #FF9F1C;
+}
+
 /* Task focus window */
 
 #task-preview {

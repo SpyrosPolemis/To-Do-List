@@ -2,7 +2,6 @@ To-Do App
 
 TODO: 
 - Delete Tasks
-- Focused tasks highlighted
 - Deleting tasks/list behaviour
 - Initial page load
 - Task due dates
