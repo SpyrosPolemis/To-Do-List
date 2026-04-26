@@ -8,6 +8,7 @@ TODO:
 - Task sorting, priority?
 - Local storage
 - Fix code structure, too much in uiController
+- Show completed
 
 All AI usage is declared in the code through comments.
 

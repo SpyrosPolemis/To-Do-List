@@ -44,6 +44,7 @@ background: radial-gradient(circle at bottom right,rgba(46, 196, 182, 1) 0%, rgb
 
 #centre-window {
   flex: 40%;
+
 }
 
 #task-preview {
@@ -271,4 +272,9 @@ textarea {
 
 textarea:focus {
   outline: none;
+}
+
+h2 {
+  font-weight: 500;
+  font-size: 1.3rem;
 }
