@@ -29,9 +29,10 @@ const uiController = {
             listDiv.append(icon, list.name);
             listDiv.classList.add("list-entry", "no-select");
             listDiv.addEventListener("click", () => {
-                focusList(list.ID)
+                this.focusList(list)
                 sidebarContent.querySelectorAll(".list-entry").forEach(l => l.classList.remove("active-list"))
                 listDiv.classList.add("active-list")
+                allTasks.classList.remove("active-list")
             })
             sidebarContent.append(listDiv);
         })
@@ -40,19 +41,22 @@ const uiController = {
         const AddListModal = document.querySelector("#newListDialog")        
         AddListModal.show()
     },
+    focusList(listToFocus) {
+        const lists = listController.getLists()
+        taskInputSection.innerHTML = ""
+        listHeader.textContent = listToFocus.name
+        taskInputSection.innerHTML = ""
+        activeList = listToFocus
+        createTaskInput(listToFocus)
+        updateTasks(listToFocus)
+    }
 }
 
-function focusList(listToFocusID) {
-    const lists = listController.getLists()
-    const list = lists.find(list => list.ID === listToFocusID)
-    taskInputSection.innerHTML = ""
-
-    listHeader.textContent = list.name
-    taskInputSection.innerHTML = ""
-    activeList = list
-    createTaskInput(list)
-    updateTasks(list)
-}
+const allTasks = document.querySelector("#all-tasks")
+allTasks.addEventListener("click", () => {
+    sidebarContent.querySelectorAll(".list-entry").forEach(l => l.classList.remove("active-list"))
+    allTasks.classList.add("active-list")
+})
 
 function createTaskInput(list) {
     const taskInputField = document.createElement("input")

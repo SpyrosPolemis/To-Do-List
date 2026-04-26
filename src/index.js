@@ -17,3 +17,14 @@ listForm.addEventListener("submit", () => {
     uiController.updateLists()
     listForm.reset()
 })
+
+const allTasks = document.querySelector("#all-tasks")
+allTasks.classList.add("active-list")
+allTasks.addEventListener("click", () => {
+    uiController.focusList(listController.getMasterList())
+})
+
+function loadPage() {
+    uiController.focusList(listController.getMasterList())
+}
+loadPage()

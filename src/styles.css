@@ -85,7 +85,8 @@ background: radial-gradient(circle at bottom right,rgba(46, 196, 182, 1) 0%, rgb
 }
 
 #sidebar-header:hover,
-.list-entry:hover {
+.list-entry:hover,
+#all-tasks:hover {
   background-color: #a1cec9;
 }
 
@@ -110,6 +111,15 @@ background: radial-gradient(circle at bottom right,rgba(46, 196, 182, 1) 0%, rgb
 
 .active-list {
   background-color:#a1cec9 ;
+}
+
+#all-tasks {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  margin: 8px 0px;
+  border-radius: 4px;
 }
 
 /* List Dialog */
