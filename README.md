@@ -3,7 +3,6 @@ To-Do App
 TODO: 
 - Delete Tasks
 - Deleting tasks/list behaviour
-- Initial page load
 - Task due dates
 - Task sorting, priority?
 - Local storage
