@@ -185,6 +185,9 @@ deleteListBtn.addEventListener("click", () => {
     if (activeList != "") {
         listController.deleteList(activeList.ID)
         allTasks.classList.add("active-list")
+        taskHeader.innerHTML = ""
+        taskContent.innerHTML = ""
+        focusedTaskID = ""
         uiController.updateLists()
         uiController.focusList(listController.getMasterList())
     }
