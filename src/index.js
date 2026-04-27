@@ -13,8 +13,9 @@ createListBtn.addEventListener("click", () => {
 const listForm = document.querySelector("#list-form")
 listForm.addEventListener("submit", () => {
     const listNameField = document.querySelector("#list-name")
-    listController.createList(listNameField.value)    
+    const newList = listController.createList(listNameField.value)  
     uiController.updateLists()
+    uiController.focusList(newList) 
     listForm.reset()
 })
 

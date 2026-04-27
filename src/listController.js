@@ -14,7 +14,9 @@ const listController = {
         } 
     },
     createList(name) {
-        lists.push(new List(name))
+        const newList = new List(name)
+        lists.push(newList)
+        return newList
     },
     getLists() {
         return lists

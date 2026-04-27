@@ -6,7 +6,6 @@ import binIcon from "./assets/bin.svg"
 
 
 const sidebarContent = document.querySelector("#sidebar-content");
-// const centreWindow = document.querySelector("#centre-window")
 const taskInputSection = document.querySelector("#task-input")
 const centreContent = document.querySelector("#tasks") 
 const completedTasks = document.querySelector("#completed-tasks-content")
@@ -16,7 +15,7 @@ const listHeader = document.querySelector("#list-header")
 const taskHeader = document.querySelector("#task-header")
 const taskContent = document.querySelector("#task-content")
 
-let activeList = ""
+let activeList = "" // List object
 
 const uiController = {
     updateLists() {
@@ -27,13 +26,12 @@ const uiController = {
             const icon = document.createElement("img");
             icon.src = listIcon;
             icon.draggable = false;
+            listDiv.id = "id-" + list.ID
             listDiv.append(icon, list.name);
             listDiv.classList.add("list-entry", "no-select");
             listDiv.addEventListener("click", () => {
                 this.focusList(list)
-                sidebarContent.querySelectorAll(".list-entry").forEach(l => l.classList.remove("active-list"))
-                listDiv.classList.add("active-list")
-                allTasks.classList.remove("active-list")
+                highlightHelper(sidebarContent, listDiv)
             })
             sidebarContent.append(listDiv);
         })
@@ -44,6 +42,14 @@ const uiController = {
     },
     focusList(listToFocus) {
         const lists = listController.getLists()
+        if (listToFocus !== listController.getMasterList()) {
+            const focusedList = document.querySelector(`#id-${listToFocus.ID}`)
+            allTasks.classList.remove("active-list")
+            focusedList.classList.add("active-list")
+            deleteListBtn.style.display = "block"
+        } else {
+            deleteListBtn.style.display = "none"
+        }
         taskInputSection.innerHTML = ""
         listHeader.textContent = listToFocus.name
         taskInputSection.innerHTML = ""
@@ -51,6 +57,12 @@ const uiController = {
         createTaskInput(listToFocus)
         updateTasks(listToFocus)
     }
+}
+
+function highlightHelper(sidebarContent, listDiv) {
+    sidebarContent.querySelectorAll(".list-entry").forEach(l => l.classList.remove("active-list"))
+    listDiv.classList.add("active-list")
+    allTasks.classList.remove("active-list")
 }
 
 const allTasks = document.querySelector("#all-tasks")
@@ -143,7 +155,6 @@ function focusTask(taskToFocus) {
     bin.src = binIcon
     bin.onclick = () => {
         const taskList = listController.getLists()[listController.getLists().findIndex(list => list.ID === taskToFocus.listID)]
-        console.log(taskList)
         taskList.deleteTask(taskToFocus)
         taskHeader.innerHTML = ""
         taskContent.innerHTML = ""
@@ -171,10 +182,9 @@ const showCompleteBtn = document.querySelector("#show-completed-btn")
 const deleteListBtn = document.querySelector("#delete-list-btn")
 
 deleteListBtn.addEventListener("click", () => {
-    console.log(activeList)
     if (activeList != "") {
-        console.log("Call to delete list firing")
         listController.deleteList(activeList.ID)
+        allTasks.classList.add("active-list")
         uiController.updateLists()
         uiController.focusList(listController.getMasterList())
     }

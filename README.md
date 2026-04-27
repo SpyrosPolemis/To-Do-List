@@ -1,8 +1,6 @@
 To-Do App
 
 TODO: 
-- Delete Tasks
-- Deleting tasks/list behaviour
 - Task due dates
 - Task sorting, priority?
 - Local storage
