@@ -2,6 +2,8 @@ import List from "./List.js"
 
 let lists = []
 let masterlist = new List("All Tasks")
+lists.push(masterlist)
+export { masterlist }
 
 const listController = {
     deleteList(listID) {
@@ -21,8 +23,7 @@ const listController = {
         return lists.map((list) => list.name)
     },
     getMasterList() {
-        console.log("masterlist tasks " + masterlist.tasks)
-        let allTasks = new Set([...masterlist.tasks])
+        let allTasks = new Set([...masterlist.tasks]) // using set to avoid duplicate tasks when appending
         lists.forEach((list) => {
             list.tasks.forEach((task) => {
                 allTasks.add(task)

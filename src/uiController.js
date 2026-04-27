@@ -2,6 +2,7 @@ import listController from "./listController.js";
 import listIcon from "./assets/menu.svg"
 import checkedIcon from "./assets/blackChecked.svg"
 import uncheckedIcon from "./assets/blackUnchecked.svg"
+import binIcon from "./assets/bin.svg"
 
 
 const sidebarContent = document.querySelector("#sidebar-content");
@@ -21,7 +22,7 @@ const uiController = {
     updateLists() {
         sidebarContent.innerHTML = ""
         const lists =  listController.getLists()
-        lists.forEach(list => {
+        lists.filter(list => list.ID !== listController.getMasterList().ID).forEach(list => {
             const listDiv = document.createElement("div");
             const icon = document.createElement("img");
             icon.src = listIcon;
@@ -112,7 +113,6 @@ function updateTasks(list) {
             focusTask(task)
             completedTasks.querySelectorAll(".task").forEach((t) => {
                 t.classList.remove("focused-task")
-                console.log("hm")
             })
             incompleteTasks.querySelectorAll(".task").forEach((t) => {
                 t.classList.remove("focused-task")
@@ -133,7 +133,25 @@ function updateTasks(list) {
 }
 
 function focusTask(taskToFocus) {
-    taskHeader.textContent = taskToFocus.name
+    // render heading   
+    taskHeader.innerHTML = ""
+    const taskHeaderText = document.createElement("div")
+    taskHeaderText.textContent = taskToFocus.name
+    taskHeader.append(taskHeaderText)
+
+    const bin = document.createElement("img")
+    bin.src = binIcon
+    bin.onclick = () => {
+        const taskList = listController.getLists()[listController.getLists().findIndex(list => list.ID === taskToFocus.listID)]
+        console.log(taskList)
+        taskList.deleteTask(taskToFocus)
+        taskHeader.innerHTML = ""
+        taskContent.innerHTML = ""
+        focusedTaskID = ""
+        updateTasks(taskList)
+    }
+    taskHeader.append(bin)
+    // render body
     taskContent.innerHTML = ""
     const taskText = document.createElement("textarea")
     taskText.addEventListener("input", () => {
