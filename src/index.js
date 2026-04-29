@@ -26,6 +26,9 @@ allTasks.addEventListener("click", () => {
 })
 
 function loadPage() {
+    const exampleList = listController.createList("Welcome!")
+    exampleList.addTask("Example Task")
     uiController.focusList(listController.getMasterList())
+    uiController.updateLists()
 }
 loadPage()
