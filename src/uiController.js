@@ -52,7 +52,6 @@ const uiController = {
         }
         taskInputSection.innerHTML = ""
         listHeader.textContent = listToFocus.name
-        taskInputSection.innerHTML = ""
         activeList = listToFocus
         createTaskInput(listToFocus)
         updateTasks(listToFocus)
@@ -78,9 +77,11 @@ function createTaskInput(list) {
     taskInputSubmit.textContent = "Add task"
     taskInputSubmit.onclick = () => {
         if (taskInputField.value.length > 0) {
-            list.addTask(taskInputField.value)
+            const newTask = list.addTask(taskInputField.value)
             taskInputField.innerHTML = ""
+            focusedTaskID = newTask.ID
             updateTasks(list)
+            focusTask(newTask)
             taskInputField.value = ""
         }
     }
@@ -155,11 +156,16 @@ function focusTask(taskToFocus) {
     bin.src = binIcon
     bin.onclick = () => {
         const taskList = listController.getLists()[listController.getLists().findIndex(list => list.ID === taskToFocus.listID)]
+        console.log("We are deleting from", taskList)
         taskList.deleteTask(taskToFocus)
         taskHeader.innerHTML = ""
         taskContent.innerHTML = ""
         focusedTaskID = ""
-        updateTasks(taskList)
+        if (activeList === listController.getMasterList()) {
+            updateTasks(listController.getMasterList())
+        } else {
+            updateTasks(taskList)
+        }
     }
     taskHeader.append(bin)
     // render body

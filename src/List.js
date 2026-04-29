@@ -9,7 +9,9 @@ export default class List {
     }
 
     addTask(taskName) { 
-        this.tasks.push(new Task(taskName, this.ID))
+        const newTask = new Task(taskName, this.ID)
+        this.tasks.push(newTask)
+        return newTask
     }
     deleteTask(taskToDelete) {
         this.tasks.splice(this.tasks.findIndex(task => task.ID === taskToDelete.ID), 1)
