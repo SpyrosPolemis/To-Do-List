@@ -8,6 +8,7 @@ import binIcon from "./assets/bin.svg"
 const sidebarContent = document.querySelector("#sidebar-content");
 const taskInputSection = document.querySelector("#task-input")
 const centreContent = document.querySelector("#tasks") 
+const completedTasksSection = document.querySelector("#completed-tasks")
 const completedTasks = document.querySelector("#completed-tasks-content")
 const incompleteTasks = document.querySelector("#incomplete-tasks-content")
 const centreHeading = document.querySelector("#centre-header")
@@ -185,6 +186,11 @@ const listConfigBtn = document.querySelector("#list-config-btn")
 const listConfigMenu = document.querySelector("#list-config-menu")
 
 const showCompleteBtn = document.querySelector("#show-completed-btn")
+showCompleteBtn.onclick = toggleCompleted
+function toggleCompleted() {
+    completedTasksSection.classList.toggle("hide")
+}
+
 const deleteListBtn = document.querySelector("#delete-list-btn")
 
 deleteListBtn.addEventListener("click", () => {

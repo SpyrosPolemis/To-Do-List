@@ -255,6 +255,10 @@ background: radial-gradient(circle at bottom right,rgba(46, 196, 182, 1) 0%, rgb
   background-color: #FF9F1C;
 }
 
+.hide {
+  display: none;
+}
+
 /* Task focus window */
 
 #task-preview {
