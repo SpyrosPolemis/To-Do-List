@@ -14,6 +14,8 @@ const incompleteTasks = document.querySelector("#incomplete-tasks-content")
 const centreHeading = document.querySelector("#centre-header")
 const listHeader = document.querySelector("#list-header")
 const taskHeader = document.querySelector("#task-header")
+const taskHeaderBottom = document.querySelector("#task-header-bottom")
+const taskHeaderTop = document.querySelector("#task-header-top")
 const taskContent = document.querySelector("#task-content")
 
 let activeList = "" // List object
@@ -97,7 +99,7 @@ function updateTasks(list) {
     list.tasks.forEach(task => {
         const taskDiv = document.createElement("div")
         const checkTask = document.createElement("img")
-        checkTask.classList.add("no-select")
+        checkTask.classList.add("no-select", "clickable")
         const taskName = document.createElement("div")
         if (!task.completed) {
             checkTask.src = uncheckedIcon
@@ -148,10 +150,10 @@ function updateTasks(list) {
 
 function focusTask(taskToFocus) {
     // render heading   
-    taskHeader.innerHTML = ""
-    const taskHeaderText = document.createElement("div")
-    taskHeaderText.textContent = taskToFocus.name
-    taskHeader.append(taskHeaderText)
+    taskHeaderTop.innerHTML = ""
+    const taskHeaderTopText = document.createElement("div")
+    taskHeaderTopText.textContent = taskToFocus.name
+    taskHeaderTop.append(taskHeaderTopText)
 
     const bin = document.createElement("img")
     bin.src = binIcon
@@ -159,7 +161,8 @@ function focusTask(taskToFocus) {
         const taskList = listController.getLists()[listController.getLists().findIndex(list => list.ID === taskToFocus.listID)]
         console.log("We are deleting from", taskList)
         taskList.deleteTask(taskToFocus)
-        taskHeader.innerHTML = ""
+        taskHeaderTop.innerHTML = ""
+        taskHeaderBottom.innerHTML = ""
         taskContent.innerHTML = ""
         focusedTaskID = ""
         if (activeList === listController.getMasterList()) {
@@ -168,7 +171,10 @@ function focusTask(taskToFocus) {
             updateTasks(taskList)
         }
     }
-    taskHeader.append(bin)
+    taskHeaderTop.append(bin)
+    taskHeaderBottom.innerHTML = ""
+    const prioritySetter = createPrioritySetter(taskToFocus)
+    taskHeaderBottom.append(prioritySetter)
     // render body
     taskContent.innerHTML = ""
     const taskText = document.createElement("textarea")
@@ -179,6 +185,38 @@ function focusTask(taskToFocus) {
     taskContent.append(taskText)
     taskText.focus()
     taskText.textContent = taskToFocus.description
+}
+
+function createPrioritySetter(task) {
+    const prioritySetterDiv = document.createElement("div")
+    const priorityLabel = document.createElement("label")
+    priorityLabel.for = "priority"
+    priorityLabel.textContent = "Priority:"
+    const prioritySelect = document.createElement("select")
+    prioritySelect.add(new Option("None"))
+    prioritySelect.add(new Option("Low"))
+    prioritySelect.add(new Option("Medium"))
+    prioritySelect.add(new Option("High"))
+    switch (task.priority) {
+        case "Low":
+            prioritySelect.value = "Low"
+            break
+        case "Medium":
+            prioritySelect.value = "Medium"
+            break
+        case "High":
+            prioritySelect.value = "High"
+            break
+        default:
+            prioritySelect.value = "None"
+    }
+    prioritySelect.addEventListener("change", () => {
+        task.setPriority(prioritySelect.value)
+    })
+    prioritySetterDiv.append(priorityLabel, prioritySelect)
+    prioritySetterDiv.style.display = "flex"
+    prioritySetterDiv.style.gap = "8px"
+    return prioritySetterDiv
 }
 
 const listConfigSect = document.querySelector("#list-config")
@@ -197,7 +235,7 @@ deleteListBtn.addEventListener("click", () => {
     if (activeList != "") {
         listController.deleteList(activeList.ID)
         allTasks.classList.add("active-list")
-        taskHeader.innerHTML = ""
+        taskHeaderTop.innerHTML = ""
         taskContent.innerHTML = ""
         focusedTaskID = ""
         uiController.updateLists()
