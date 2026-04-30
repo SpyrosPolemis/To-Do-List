@@ -6,6 +6,8 @@ export default class {
         this.completed = false
         this.listID = listID
         this.priority = "None"
+        this.dateCreated = new Date()
+        this.dateDue = null
     }
 
     setPriority(priorityLevel) {
@@ -18,5 +20,10 @@ export default class {
     }
     markIncomplete() {
         this.completed = false
+    }
+    calculateTimeRemaining() {
+        if (dateDue != null) {
+            return this.dateDue - new Date()   
+        }
     }
 }

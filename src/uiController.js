@@ -155,6 +155,7 @@ function updateTasks(list) {
             })
             taskDiv.classList.add("focused-task")
             focusedTaskID = task.ID
+            console.log(task.dateDue)
         }
         if (task.completed) {
             taskDiv.classList.add("completed")
@@ -179,7 +180,6 @@ function focusTask(taskToFocus) {
     bin.src = binIcon
     bin.onclick = () => {
         const taskList = listController.getLists()[listController.getLists().findIndex(list => list.ID === taskToFocus.listID)]
-        console.log("We are deleting from", taskList)
         taskList.deleteTask(taskToFocus)
         taskHeaderTop.innerHTML = ""
         taskHeaderBottom.innerHTML = ""
@@ -195,6 +195,8 @@ function focusTask(taskToFocus) {
     taskHeaderBottom.innerHTML = ""
     const prioritySetter = createPrioritySetter(taskToFocus)
     taskHeaderBottom.append(prioritySetter)
+    const dateSetter = createDateSetter(taskToFocus)
+    taskHeaderBottom.append(dateSetter)
     // render body
     taskContent.innerHTML = ""
     const taskText = document.createElement("textarea")
@@ -248,8 +250,27 @@ function createPrioritySetter(task) {
     })
     prioritySetterDiv.append(priorityLabel, prioritySelect)
     prioritySetterDiv.style.display = "flex"
-    prioritySetterDiv.style.gap = "8px"
+    prioritySetterDiv.style.gap = "4px"
     return prioritySetterDiv
+}
+
+function createDateSetter(task) {
+    const dateSetterDiv = document.createElement("div")
+    const dateSetterLabel = document.createElement("label")
+    dateSetterLabel.for = "date-setter"
+    dateSetterLabel.textContent = "Due Date:"
+    const dateSetter = document.createElement("input")
+    dateSetter.type = "date"
+    dateSetter.id = "date-setter"
+    if (task.dateDue !== null) {
+        dateSetter.valueAsDate = task.dateDue
+    }
+    dateSetter.addEventListener("change", () => {
+        task.dateDue = new Date(dateSetter.value)
+    })
+    dateSetterDiv.id = "date-setter-div"
+    dateSetterDiv.append(dateSetterLabel, dateSetter)
+    return dateSetterDiv
 }
 
 const listConfigSect = document.querySelector("#list-config")

@@ -269,7 +269,7 @@ background: radial-gradient(circle at bottom right,rgba(46, 196, 182, 1) 0%, rgb
  margin-bottom: 8px;
  display: flex;
  flex-direction: column;
- padding-right: 20px;
+ padding-right: 12px;
  gap: 4px;
 }
 
@@ -281,6 +281,9 @@ background: radial-gradient(circle at bottom right,rgba(46, 196, 182, 1) 0%, rgb
 
 #task-header-bottom {
   display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px;
 }
 
 #task-content {
@@ -304,8 +307,8 @@ h2 {
 }
 
 .noPriority  {
-  color: #2e2e2e;
-  fill: #2e2e2e;
+  color: #000000;
+  fill: #000000;
 }
 .lowPriority  {
   color: #006b3d;
@@ -326,4 +329,9 @@ h2 {
 .highPriority {
   display: flex;
   align-items: center;
+}
+
+#date-setter-div {
+  display: flex;
+  gap: 4px;
 }
