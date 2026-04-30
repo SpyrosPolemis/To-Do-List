@@ -224,6 +224,7 @@ background: radial-gradient(circle at bottom right,rgba(46, 196, 182, 1) 0%, rgb
   border-radius: 8px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
 }
 
@@ -334,4 +335,14 @@ h2 {
 #date-setter-div {
   display: flex;
   gap: 4px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.due-date {
+  color: #2f2f2f;
 }

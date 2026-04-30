@@ -106,7 +106,10 @@ function updateTasks(list) {
     incompleteTasks.innerHTML = ""
     list.tasks.forEach(task => {
         const iconDiv = document.createElement("div")
-        const taskDiv = document.createElement("div")        
+        const taskDiv = document.createElement("div")     
+        const taskRight = document.createElement("div")     
+        const taskLeft = document.createElement("div")   
+        taskLeft.classList.add("flex")
         iconDiv.classList.add("no-select", "clickable")
         const taskName = document.createElement("div")
         // Set checked/unchecked
@@ -124,8 +127,6 @@ function updateTasks(list) {
             iconDiv.classList.add("mediumPriority")
         } else if (task.priority === "High") {
             iconDiv.classList.add("highPriority")
-        } else {
-            iconDiv.style.fill = "#d61f1f"
         }
         iconDiv.addEventListener("click", (e) => {
             e.stopPropagation()
@@ -140,7 +141,16 @@ function updateTasks(list) {
             updateTasks(list)
         })
         taskName.textContent = task.name
-        taskDiv.append(iconDiv, taskName)
+        const taskDueDate = document.createElement("div")
+        taskDueDate.classList.add("due-date")
+        if (task.dateDue === null) {
+            taskDueDate.textContent = "No due date"
+        } else {
+            taskDueDate.textContent = task.dateDue.toLocaleDateString()
+        }
+        taskRight.append(taskDueDate)
+        taskLeft.append(iconDiv, taskName)
+        taskDiv.append(taskLeft, taskRight)
         taskDiv.classList.add("task")
         if (task.ID === focusedTaskID) {
             taskDiv.classList.add("focused-task")
@@ -267,6 +277,7 @@ function createDateSetter(task) {
     }
     dateSetter.addEventListener("change", () => {
         task.dateDue = new Date(dateSetter.value)
+        updateTasks(listController.getLists()[listController.getLists().findIndex(list => list.ID === task.listID)])
     })
     dateSetterDiv.id = "date-setter-div"
     dateSetterDiv.append(dateSetterLabel, dateSetter)
