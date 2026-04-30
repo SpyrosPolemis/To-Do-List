@@ -228,7 +228,7 @@ background: radial-gradient(circle at bottom right,rgba(46, 196, 182, 1) 0%, rgb
 }
 
 .task:hover {
-  background-color: #FFBF69;
+  background-color: #dfdfdf;
 }
 
 #tasks {
@@ -247,12 +247,9 @@ background: radial-gradient(circle at bottom right,rgba(46, 196, 182, 1) 0%, rgb
   text-decoration: line-through;
 }
 
-.focused-task {
-  background-color: #FF9F1C;
-}
-
+.focused-task,
 .focused-task:hover {
-  background-color: #FF9F1C;
+  background-color: #fff4e6;
 }
 
 .hide {
@@ -304,4 +301,29 @@ textarea:focus {
 h2 {
   font-weight: 500;
   font-size: 1.3rem;
+}
+
+.noPriority  {
+  color: #2e2e2e;
+  fill: #2e2e2e;
+}
+.lowPriority  {
+  color: #006b3d;
+  fill: #006b3d;
+}
+.mediumPriority  {
+  color: #c5a400;
+  fill: #c5a400;
+}
+.highPriority  {
+  color: #d61f1f;
+  fill: #d61f1f;
+}
+
+.noPriority,
+.lowPriority,
+.mediumPriority,
+.highPriority {
+  display: flex;
+  align-items: center;
 }

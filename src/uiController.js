@@ -92,35 +92,55 @@ function createTaskInput(list) {
 }
 
 
+// Found out about this method of using SVG's through AI
+const unchecked = await fetch(uncheckedIcon)
+const uncheckedText = await unchecked.text()
+
+const checked = await fetch(checkedIcon)
+const checkedText = await checked.text()
+
+
 let focusedTaskID;
 function updateTasks(list) {
     completedTasks.innerHTML = ""
     incompleteTasks.innerHTML = ""
     list.tasks.forEach(task => {
-        const taskDiv = document.createElement("div")
-        const checkTask = document.createElement("img")
-        checkTask.classList.add("no-select", "clickable")
+        const iconDiv = document.createElement("div")
+        const taskDiv = document.createElement("div")        
+        iconDiv.classList.add("no-select", "clickable")
         const taskName = document.createElement("div")
+        // Set checked/unchecked
         if (!task.completed) {
-            checkTask.src = uncheckedIcon
+            iconDiv.innerHTML = uncheckedText
         } else {
-            checkTask.src = checkedIcon
+            iconDiv.innerHTML = checkedText
         }
-        checkTask.addEventListener("click", (e) => {
+        // Set colour
+        if (task.priority === "None") {
+            iconDiv.classList.add("noPriority")
+        } else if (task.priority === "Low") {
+            iconDiv.classList.add("lowPriority")
+        } else if (task.priority === "Medium") {
+            iconDiv.classList.add("mediumPriority")
+        } else if (task.priority === "High") {
+            iconDiv.classList.add("highPriority")
+        } else {
+            iconDiv.style.fill = "#d61f1f"
+        }
+        iconDiv.addEventListener("click", (e) => {
             e.stopPropagation()
             if(task.completed) {
                 task.markIncomplete()
-                checkTask.src = uncheckedIcon
-                
+                iconDiv.innerHTML = uncheckedText
             } else {
                 task.markComplete()
-                checkTask.src = checkedIcon
+                iconDiv.innerHTML = checkedText
                 
             }
             updateTasks(list)
         })
         taskName.textContent = task.name
-        taskDiv.append(checkTask, taskName)
+        taskDiv.append(iconDiv, taskName)
         taskDiv.classList.add("task")
         if (task.ID === focusedTaskID) {
             taskDiv.classList.add("focused-task")
@@ -193,10 +213,22 @@ function createPrioritySetter(task) {
     priorityLabel.for = "priority"
     priorityLabel.textContent = "Priority:"
     const prioritySelect = document.createElement("select")
-    prioritySelect.add(new Option("None"))
-    prioritySelect.add(new Option("Low"))
-    prioritySelect.add(new Option("Medium"))
-    prioritySelect.add(new Option("High"))
+    // no prio
+    const noPriority = new Option("None")
+    noPriority.classList.add("noPriority", "priority-option")
+    prioritySelect.add(noPriority)
+    // low prio
+    const lowPriority = new Option("Low")
+    lowPriority.classList.add("lowPriority", "priority-option")
+    prioritySelect.add(lowPriority)
+    // mid prio
+    const mediumPriority = new Option("Medium")
+    mediumPriority.classList.add("mediumPriority", "priority-option")
+    prioritySelect.add(mediumPriority)
+    // high prio
+    const highPriority = new Option("High")
+    highPriority.classList.add("highPriority", "priority-option")
+    prioritySelect.add(highPriority)
     switch (task.priority) {
         case "Low":
             prioritySelect.value = "Low"
@@ -212,6 +244,7 @@ function createPrioritySetter(task) {
     }
     prioritySelect.addEventListener("change", () => {
         task.setPriority(prioritySelect.value)
+        updateTasks(listController.getLists()[listController.getLists().findIndex(list => list.ID === task.listID)])
     })
     prioritySetterDiv.append(priorityLabel, prioritySelect)
     prioritySetterDiv.style.display = "flex"
@@ -251,7 +284,5 @@ listConfigBtn.addEventListener("click", (e) => {
 document.addEventListener("click", () => {
     listConfigMenu.classList.remove("open")
 })
-
-
 
 export default uiController

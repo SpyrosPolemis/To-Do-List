@@ -5,7 +5,7 @@ export default class {
         this.description = ""
         this.completed = false
         this.listID = listID
-        this.priority = 0 // 0-4
+        this.priority = "None"
     }
 
     setPriority(priorityLevel) {
