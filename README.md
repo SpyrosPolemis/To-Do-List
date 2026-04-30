@@ -1,10 +1,12 @@
 To-Do App
 
 TODO: 
-- Task due dates
-- Task sorting, priority?
+- Task sorting
 - Local storage
-- Fix code structure, too much in uiController
+- Fix code structure, too much in uiController2
+    - Add find list helper func
+    - remove styling via JS
+    - actually make use of index.js
 
 All AI usage is declared in the code through comments.
 
