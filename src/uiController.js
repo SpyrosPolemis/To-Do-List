@@ -107,9 +107,20 @@ const uiController = {
             taskName.textContent = task.name
             const taskDueDate = document.createElement("div")
             taskDueDate.classList.add("due-date")
+            const now = new Date()
+            const daysLeft = (task.dateDue - now) / (1000 * 60 * 60 * 24)
+            console.log(daysLeft)
             if (task.dateDue === null) {
                 taskDueDate.textContent = "No due date"
-            } else {
+            } else if (daysLeft >= 0 && daysLeft < 1) { //today
+                taskDueDate.textContent = "Due Today"
+            } else if (daysLeft >= 1 && daysLeft < 2) { // tomorrow
+                taskDueDate.textContent = "Due Tomorrow"
+            } else if (daysLeft < 0) { // overdue
+                taskDueDate.style.color = "red"
+                taskDueDate.textContent = "Overdue!"
+            } else { // in the future
+                console.log(task.dateDue)
                 taskDueDate.textContent = task.dateDue.toLocaleDateString()
             }
             taskRight.append(taskDueDate)
@@ -282,7 +293,9 @@ function createDateSetter(task) {
         dateSetter.valueAsDate = task.dateDue
     }
     dateSetter.addEventListener("change", () => {
-        task.dateDue = new Date(dateSetter.value)
+        let dueDate = new Date(dateSetter.value)
+        dueDate.setHours(23, 59)
+        task.dateDue = dueDate
         uiController.updateTasks(uiController.getActiveList())
     })
     dateSetterDiv.id = "date-setter-div"
