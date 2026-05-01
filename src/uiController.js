@@ -102,7 +102,7 @@ const uiController = {
                     iconDiv.innerHTML = checkedText
                     
                 }
-                updateTasks(list)
+                this.updateTasks(list)
             })
             taskName.textContent = task.name
             const taskDueDate = document.createElement("div")

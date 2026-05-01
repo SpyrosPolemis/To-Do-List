@@ -49,7 +49,7 @@ sortOptions.forEach((option) => {
             }
         } else if (e.target.id === "sort-due-btn") {
             sortingFunc = function(a, b) {
-                return b.dateDue - a.dateDue 
+                return a.dateDue - b.dateDue 
             }
         } else {
             sortingFunc = function(a, b) {
