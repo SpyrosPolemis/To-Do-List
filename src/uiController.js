@@ -17,6 +17,8 @@ const taskHeader = document.querySelector("#task-header")
 const taskHeaderBottom = document.querySelector("#task-header-bottom")
 const taskHeaderTop = document.querySelector("#task-header-top")
 const taskContent = document.querySelector("#task-content")
+const sortContainer = document.querySelector("#sort-container")
+
 
 let activeList = "" // List object
 
@@ -57,7 +59,90 @@ const uiController = {
         listHeader.textContent = listToFocus.name
         activeList = listToFocus
         createTaskInput(listToFocus)
-        updateTasks(listToFocus)
+        this.updateTasks(listToFocus)
+    },
+    showSortMenu() {
+        sortContainer.classList.add("open")
+    },
+    updateTasks(list) {
+        console.log(list)
+        completedTasks.innerHTML = ""
+        incompleteTasks.innerHTML = ""
+        list.tasks.forEach(task => {
+            const iconDiv = document.createElement("div")
+            const taskDiv = document.createElement("div")     
+            const taskRight = document.createElement("div")     
+            const taskLeft = document.createElement("div")   
+            taskLeft.classList.add("flex")
+            iconDiv.classList.add("no-select", "clickable", "flex")
+            const taskName = document.createElement("div")
+            // Set checked/unchecked
+            if (!task.completed) {
+                iconDiv.innerHTML = uncheckedText
+            } else {
+                iconDiv.innerHTML = checkedText
+            }
+            // Set colour
+            if (task.priority === 0) {
+                iconDiv.classList.add("noPriority")
+            } else if (task.priority === 1) {
+                iconDiv.classList.add("lowPriority")
+            } else if (task.priority === 2) {
+                iconDiv.classList.add("mediumPriority")
+            } else if (task.priority === 3) {
+                iconDiv.classList.add("highPriority")
+            }
+            iconDiv.addEventListener("click", (e) => {
+                e.stopPropagation()
+                if(task.completed) {
+                    task.markIncomplete()
+                    iconDiv.innerHTML = uncheckedText
+                } else {
+                    task.markComplete()
+                    iconDiv.innerHTML = checkedText
+                    
+                }
+                updateTasks(list)
+            })
+            taskName.textContent = task.name
+            const taskDueDate = document.createElement("div")
+            taskDueDate.classList.add("due-date")
+            if (task.dateDue === null) {
+                taskDueDate.textContent = "No due date"
+            } else {
+                taskDueDate.textContent = task.dateDue.toLocaleDateString()
+            }
+            taskRight.append(taskDueDate)
+            taskLeft.append(iconDiv, taskName)
+            taskDiv.append(taskLeft, taskRight)
+            taskDiv.classList.add("task")
+            if (task.ID === focusedTaskID) {
+                taskDiv.classList.add("focused-task")
+            }
+            taskDiv.onclick = () => {
+                focusTask(task)
+                completedTasks.querySelectorAll(".task").forEach((t) => {
+                    t.classList.remove("focused-task")
+                })
+                incompleteTasks.querySelectorAll(".task").forEach((t) => {
+                    t.classList.remove("focused-task")
+                })
+                taskDiv.classList.add("focused-task")
+                focusedTaskID = task.ID
+            }
+            if (task.completed) {
+                taskDiv.classList.add("completed")
+                taskName.classList.add("completed")
+                completedTasks.append(taskDiv)
+            } else {
+                incompleteTasks.append(taskDiv)
+                taskDiv.classList.remove("completed")
+                taskName.classList.remove("completed")
+            }
+        });
+    },
+    getActiveList() {
+        return activeList
     }
 }
 
@@ -83,14 +168,13 @@ function createTaskInput(list) {
             const newTask = list.addTask(taskInputField.value)
             taskInputField.innerHTML = ""
             focusedTaskID = newTask.ID
-            updateTasks(list)
+            uiController.updateTasks(list)
             focusTask(newTask)
             taskInputField.value = ""
         }
     }
     taskInputSection.append(taskInputField, taskInputSubmit)
 }
-
 
 // Found out about this method of using SVG's through AI
 const unchecked = await fetch(uncheckedIcon)
@@ -99,85 +183,7 @@ const uncheckedText = await unchecked.text()
 const checked = await fetch(checkedIcon)
 const checkedText = await checked.text()
 
-
 let focusedTaskID;
-function updateTasks(list) {
-    completedTasks.innerHTML = ""
-    incompleteTasks.innerHTML = ""
-    list.tasks.forEach(task => {
-        const iconDiv = document.createElement("div")
-        const taskDiv = document.createElement("div")     
-        const taskRight = document.createElement("div")     
-        const taskLeft = document.createElement("div")   
-        taskLeft.classList.add("flex")
-        iconDiv.classList.add("no-select", "clickable")
-        const taskName = document.createElement("div")
-        // Set checked/unchecked
-        if (!task.completed) {
-            iconDiv.innerHTML = uncheckedText
-        } else {
-            iconDiv.innerHTML = checkedText
-        }
-        // Set colour
-        if (task.priority === "None") {
-            iconDiv.classList.add("noPriority")
-        } else if (task.priority === "Low") {
-            iconDiv.classList.add("lowPriority")
-        } else if (task.priority === "Medium") {
-            iconDiv.classList.add("mediumPriority")
-        } else if (task.priority === "High") {
-            iconDiv.classList.add("highPriority")
-        }
-        iconDiv.addEventListener("click", (e) => {
-            e.stopPropagation()
-            if(task.completed) {
-                task.markIncomplete()
-                iconDiv.innerHTML = uncheckedText
-            } else {
-                task.markComplete()
-                iconDiv.innerHTML = checkedText
-                
-            }
-            updateTasks(list)
-        })
-        taskName.textContent = task.name
-        const taskDueDate = document.createElement("div")
-        taskDueDate.classList.add("due-date")
-        if (task.dateDue === null) {
-            taskDueDate.textContent = "No due date"
-        } else {
-            taskDueDate.textContent = task.dateDue.toLocaleDateString()
-        }
-        taskRight.append(taskDueDate)
-        taskLeft.append(iconDiv, taskName)
-        taskDiv.append(taskLeft, taskRight)
-        taskDiv.classList.add("task")
-        if (task.ID === focusedTaskID) {
-            taskDiv.classList.add("focused-task")
-        }
-        taskDiv.onclick = () => {
-            focusTask(task)
-            completedTasks.querySelectorAll(".task").forEach((t) => {
-                t.classList.remove("focused-task")
-            })
-            incompleteTasks.querySelectorAll(".task").forEach((t) => {
-                t.classList.remove("focused-task")
-            })
-            taskDiv.classList.add("focused-task")
-            focusedTaskID = task.ID
-            console.log(task.dateDue)
-        }
-        if (task.completed) {
-            taskDiv.classList.add("completed")
-            taskName.classList.add("completed")
-            completedTasks.append(taskDiv)
-        } else {
-            incompleteTasks.append(taskDiv)
-            taskDiv.classList.remove("completed")
-            taskName.classList.remove("completed")
-        }
-    });
-}
 
 function focusTask(taskToFocus) {
     // render heading   
@@ -196,9 +202,9 @@ function focusTask(taskToFocus) {
         taskContent.innerHTML = ""
         focusedTaskID = ""
         if (activeList === listController.getMasterList()) {
-            updateTasks(listController.getMasterList())
+            uiController.updateTasks(listController.getMasterList())
         } else {
-            updateTasks(taskList)
+            uiController.updateTasks(taskList)
         }
     }
     taskHeaderTop.append(bin)
@@ -226,37 +232,37 @@ function createPrioritySetter(task) {
     priorityLabel.textContent = "Priority:"
     const prioritySelect = document.createElement("select")
     // no prio
-    const noPriority = new Option("None")
+    const noPriority = new Option("None", 0)
     noPriority.classList.add("noPriority", "priority-option")
     prioritySelect.add(noPriority)
     // low prio
-    const lowPriority = new Option("Low")
+    const lowPriority = new Option("Low", 1)
     lowPriority.classList.add("lowPriority", "priority-option")
     prioritySelect.add(lowPriority)
     // mid prio
-    const mediumPriority = new Option("Medium")
+    const mediumPriority = new Option("Medium", 2)
     mediumPriority.classList.add("mediumPriority", "priority-option")
     prioritySelect.add(mediumPriority)
     // high prio
-    const highPriority = new Option("High")
+    const highPriority = new Option("High", 3)
     highPriority.classList.add("highPriority", "priority-option")
     prioritySelect.add(highPriority)
     switch (task.priority) {
-        case "Low":
-            prioritySelect.value = "Low"
+        case 1:
+            prioritySelect.value = task.priority
             break
-        case "Medium":
-            prioritySelect.value = "Medium"
+        case 2:
+            prioritySelect.value = task.priority
             break
-        case "High":
-            prioritySelect.value = "High"
+        case 3:
+            prioritySelect.value = task.priority
             break
         default:
-            prioritySelect.value = "None"
+            prioritySelect.value = task.priority
     }
     prioritySelect.addEventListener("change", () => {
         task.setPriority(prioritySelect.value)
-        updateTasks(listController.getLists()[listController.getLists().findIndex(list => list.ID === task.listID)])
+        uiController.updateTasks(uiController.getActiveList())
     })
     prioritySetterDiv.append(priorityLabel, prioritySelect)
     prioritySetterDiv.style.display = "flex"
@@ -268,7 +274,7 @@ function createDateSetter(task) {
     const dateSetterDiv = document.createElement("div")
     const dateSetterLabel = document.createElement("label")
     dateSetterLabel.for = "date-setter"
-    dateSetterLabel.textContent = "Due Date:"
+    dateSetterLabel.textContent = "Due:"
     const dateSetter = document.createElement("input")
     dateSetter.type = "date"
     dateSetter.id = "date-setter"
@@ -277,7 +283,7 @@ function createDateSetter(task) {
     }
     dateSetter.addEventListener("change", () => {
         task.dateDue = new Date(dateSetter.value)
-        updateTasks(listController.getLists()[listController.getLists().findIndex(list => list.ID === task.listID)])
+        uiController.updateTasks(uiController.getActiveList())
     })
     dateSetterDiv.id = "date-setter-div"
     dateSetterDiv.append(dateSetterLabel, dateSetter)
@@ -315,6 +321,7 @@ listConfigBtn.addEventListener("click", (e) => {
 
 document.addEventListener("click", () => {
     listConfigMenu.classList.remove("open")
+    sortContainer.classList.remove("open")
 })
 
 export default uiController

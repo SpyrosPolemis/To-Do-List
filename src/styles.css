@@ -346,3 +346,39 @@ h2 {
 .due-date {
   color: #2f2f2f;
 }
+
+#incomplete-tasks {
+  position: relative;
+}
+
+#incomplete-tasks-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* TODO: Look at potential better ways of doing this */
+#sort-container {
+ background-color: #CBF3F0;
+ padding: 8px;
+ border-radius: 8px;
+ flex-direction: column;
+ gap: 4px;
+ display: none;
+}
+
+.sort-option {
+ background-color: #fff;
+ padding: 4px;
+ border-radius: 4px;
+ border: solid 1px ;
+}
+
+.sort-option:hover {
+ background-color: #a1cec9;
+}
+
+#sort-container.open {
+  display: flex;
+  position: absolute;
+  justify-self: end;
+}

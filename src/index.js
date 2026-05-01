@@ -32,3 +32,31 @@ function loadPage() {
     uiController.updateLists()
 }
 loadPage()
+
+const sortButton = document.querySelector("#sort-button")
+sortButton.addEventListener("click", (e) => {
+    e.stopPropagation()
+    uiController.showSortMenu()
+})
+
+const sortOptions = document.querySelectorAll(".sort-option")
+sortOptions.forEach((option) => {
+    option.addEventListener("click", (e) => {
+        let sortingFunc = null;
+        if (e.target.id === "sort-created-btn") {
+            sortingFunc = function(a, b) {
+                return b.dateCreated - a.dateCreated 
+            }
+        } else if (e.target.id === "sort-due-btn") {
+            sortingFunc = function(a, b) {
+                return b.dateDue - a.dateDue 
+            }
+        } else {
+            sortingFunc = function(a, b) {
+                return b.priority - a.priority 
+            }   
+        }
+        uiController.getActiveList().sortList(sortingFunc)
+        uiController.updateTasks(uiController.getActiveList()) 
+    })
+})

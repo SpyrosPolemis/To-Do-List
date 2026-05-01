@@ -34,7 +34,12 @@
             <div id="task-input"></div>
             <div id="tasks">
                 <div id="incomplete-tasks">
-                    <h2 id="incomplete-tasks-header">To-do</h2>
+                    <h2 id="incomplete-tasks-header">To-do<img src="assets/sort.svg" alt="sort" id="sort-button"></h2>
+                    <div id="sort-container">
+                        <button class="sort-option clickable" id="sort-priority-btn">Sort by priority</button>
+                        <button class="sort-option clickable" id="sort-created-btn">Sort by date created</button>
+                        <button class="sort-option clickable" id="sort-due-btn">Sort by date due</button>
+                    </div>
                     <div id="incomplete-tasks-content"></div>
                 </div>
                 <div id="completed-tasks">

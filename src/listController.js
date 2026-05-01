@@ -33,7 +33,7 @@ const listController = {
         })
         masterlist.tasks = [...allTasks]
         return masterlist
-    }
+    },
 }
 
 export default listController

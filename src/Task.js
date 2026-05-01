@@ -5,15 +5,13 @@ export default class {
         this.description = ""
         this.completed = false
         this.listID = listID
-        this.priority = "None"
+        this.priority = 0
         this.dateCreated = new Date()
         this.dateDue = null
     }
 
     setPriority(priorityLevel) {
-        if (priorityLevel === "None" || priorityLevel === "Low" || priorityLevel === "Medium" || priorityLevel == "High") {
-            this.priority = priorityLevel
-        }
+        this.priority = Number(priorityLevel)
     }
     markComplete() {
         this.completed = true

@@ -19,4 +19,7 @@ export default class List {
             masterlist.deleteTask(taskToDelete)
         }
     }
+    sortList(sortingFunc) {
+        this.tasks.sort(sortingFunc)
+    }   
 }
