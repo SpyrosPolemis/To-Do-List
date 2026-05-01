@@ -1,7 +1,6 @@
 To-Do App
 
 TODO: 
-- Overdue task UI
 - Local storage
 - Fix code structure, too much in uiController2
     - Add find list helper func
